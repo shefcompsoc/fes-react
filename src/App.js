@@ -1,16 +1,22 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-import TodoList from './TodoList'
+import TodoList from "./TodoList";
 
 class App extends Component {
-  title = 'Front-end Showdown'
+  title = "Front-end Showdown";
 
-  todos = [
-    { text: 'explain react', done: true },
-    { text: 'write todo program', done: false },
-    { text: 'go to the cavendish', done: false }
-  ];
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      todos: [
+        { id: 1, text: "explain react", done: true },
+        { id: 2, text: "write todo program", done: false },
+        { id: 3, text: "go to the cavendish", done: false }
+      ]
+    }
+  }
 
   render() {
     return (
@@ -19,10 +25,33 @@ class App extends Component {
           <h1 className="App-title">Welcome to {this.title}</h1>
         </header>
 
-        <TodoList todos={this.todos}></TodoList>
+        <br />
+        <br />
 
+        <form>
+          <input type="text" />
+          <input type="submit" value="Add Todo" />
+        </form>
+
+        <hr />
+
+        <TodoList
+          todos={ this.state.todos }
+          onChange={ this.onChange.bind(this) }
+        />
       </div>
     );
+  }
+
+  onChange(id, state) {
+    const todo = this.state.todos.find(x => x.id === id)
+    todo.done = state
+
+    const filtered = this.state.todos.filter(x => x.id !== id)
+
+    this.setState({
+      todos: [todo, ...filtered]
+    })
   }
 }
 

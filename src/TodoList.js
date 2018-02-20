@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import "./TodoList.css";
 
-const TodoList = ({todos}) => {
-  return (
-    todos.map((todo) => {
+import TodoItem from "./TodoItem";
+
+class TodoList extends Component {
+  render() {
+    return this.props.todos.map(todo => {
       return (
-        <div>
-          { todo.text }
-        </div>
-      )
-    })
-  )
+        <TodoItem
+          key={ todo.id }
+          todo={ todo }
+          onChange={ this.props.onChange }
+        />
+      );
+    });
+  }
 }
 
 export default TodoList;

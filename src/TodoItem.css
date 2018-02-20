@@ -1,0 +1,3 @@
+.TodoItem.done {
+  text-decoration: line-through;
+}
