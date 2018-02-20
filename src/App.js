@@ -15,7 +15,7 @@ class App extends Component {
 
     this.state = {
       maxTodoId: 3,
-      numTodos: 3,
+      filterBy: 'none',
       todos: [
         { id: 1, text: "explain react", done: true },
         { id: 2, text: "write todo program", done: false },
@@ -46,14 +46,36 @@ class App extends Component {
           />
         </form>
 
+        <div>
+          <button onClick={ () => this.setState({filterBy: 'none'}) }>
+            All
+          </button>
+          <button onClick={ () => this.setState({filterBy: 'complete'}) }>
+            Complete
+          </button>
+          <button onClick={ () => this.setState({filterBy: 'incomplete'}) }>
+            Incomplete
+          </button>
+        </div>
+
         <hr />
 
         <TodoList
-          todos={ this.state.todos.sort(byId) }
+          todos={ this.todos.sort(byId) }
           onChange={ this.onChange }
         />
       </div>
     );
+  }
+
+  get todos () {
+    if (this.state.filterBy === 'complete') {
+      return this.state.todos.filter(x => x.done)
+    } else if (this.state.filterBy === 'incomplete') {
+      return this.state.todos.filter(x => !x.done)
+    } else {
+      return this.state.todos;
+    }
   }
 
   onChange = (id, state) => {
@@ -78,7 +100,6 @@ class App extends Component {
 
 
     this.setState({
-      numTodos: this.state.numTodos + 1,
       maxTodoId: this.state.maxTodoId + 1,
       todos: added,
     })
