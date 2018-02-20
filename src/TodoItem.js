@@ -3,17 +3,17 @@ import classNames from 'classnames';
 import './TodoItem.css';
 
 const TodoItem = ({ className, todo, onChange }) => {
-  const newClassName = classNames(className, 'TodoItem': todo.done);
+  className = classNames(className, 'TodoItem', { 'done': todo.done });
 
   return (
-    <div className={ newClassName }>
+    <div className={ className }>
       <label>
         { todo.text }
         <input
           type='checkbox'
           checked={ todo.done }
           // I tend to just do these inline. They are always just a bit
-          // of glue and never get very long.
+          // of glue.
           onChange={ ev => onChange(todo.id, ev.target.checked) }
         />
       </label>
