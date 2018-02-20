@@ -3,6 +3,10 @@ import "./App.css";
 
 import TodoList from "./TodoList";
 
+const byId = (a, b) => {
+  return a.id < b.id ? -1 : 1
+}
+
 class App extends Component {
   title = "Front-end Showdown";
 
@@ -10,6 +14,8 @@ class App extends Component {
     super(props)
 
     this.state = {
+      maxTodoId: 3,
+      numTodos: 3,
       todos: [
         { id: 1, text: "explain react", done: true },
         { id: 2, text: "write todo program", done: false },
@@ -22,21 +28,28 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to {this.title}</h1>
+          <h1 className="App-title">Welcome to { this.title }</h1>
         </header>
 
         <br />
         <br />
 
         <form>
-          <input type="text" />
-          <input type="submit" value="Add Todo" />
+          <input
+            type="text"
+            ref="todoText"
+          />
+          <input
+            type="submit"
+            value="Add Todo"
+            onClick={ this.onClick.bind(this) }
+          />
         </form>
 
         <hr />
 
         <TodoList
-          todos={ this.state.todos }
+          todos={ this.state.todos.sort(byId) }
           onChange={ this.onChange.bind(this) }
         />
       </div>
@@ -51,6 +64,23 @@ class App extends Component {
 
     this.setState({
       todos: [todo, ...filtered]
+    })
+  }
+
+  onClick(ev) {
+    ev.preventDefault()
+
+    const added = [...this.state.todos, {
+      id: this.state.maxTodoId + 1,
+      text: this.refs.todoText.value,
+      done: false
+    }]
+
+
+    this.setState({
+      numTodos: this.state.numTodos + 1,
+      maxTodoId: this.state.maxTodoId + 1,
+      todos: added,
     })
   }
 }
