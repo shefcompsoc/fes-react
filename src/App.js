@@ -42,7 +42,7 @@ class App extends Component {
           <input
             type="submit"
             value="Add Todo"
-            onClick={ this.onClick.bind(this) }
+            onClick={ this.onClick }
           />
         </form>
 
@@ -50,13 +50,13 @@ class App extends Component {
 
         <TodoList
           todos={ this.state.todos.sort(byId) }
-          onChange={ this.onChange.bind(this) }
+          onChange={ this.onChange }
         />
       </div>
     );
   }
 
-  onChange(id, state) {
+  onChange = (id, state) => {
     const todo = this.state.todos.find(x => x.id === id)
     todo.done = state
 
@@ -67,7 +67,7 @@ class App extends Component {
     })
   }
 
-  onClick(ev) {
+  onClick = (ev) => {
     ev.preventDefault()
 
     const added = [...this.state.todos, {
