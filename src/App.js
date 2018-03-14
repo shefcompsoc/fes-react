@@ -42,7 +42,7 @@ class App extends Component {
           <input
             type="submit"
             value="Add Todo"
-            onClick={ ev => {this.onClick(), ev.preventDefault()} }
+            onClick={ ev => {this.onClick(); ev.preventDefault()} }
           />
         </form>
 
