@@ -42,7 +42,7 @@ class App extends Component {
           <input
             type="submit"
             value="Add Todo"
-            onClick={ this.onClick }
+            onClick={ ev => {this.onClick(), ev.preventDefault()} }
           />
         </form>
 
@@ -79,25 +79,23 @@ class App extends Component {
   }
 
   onChange = (id, state) => {
-    const todo = this.state.todos.find(x => x.id === id)
+    const todos = [...this.state.todos]
+    const todo = todos.find(x => x.id === id)
     todo.done = state
 
-    const filtered = this.state.todos.filter(x => x.id !== id)
-
     this.setState({
-      todos: [todo, ...filtered]
+      todos
     })
   }
 
-  onClick = (ev) => {
-    ev.preventDefault()
-
+  onClick = () => {
     const added = [...this.state.todos, {
       id: this.state.maxTodoId + 1,
       text: this.refs.todoText.value,
       done: false
     }]
-
+    
+    this.refs.todoText.value = ''
 
     this.setState({
       maxTodoId: this.state.maxTodoId + 1,
